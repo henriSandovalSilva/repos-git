@@ -34,6 +34,6 @@ module.exports = {
     'no-unused-vars': 'off',
     'import/named': 'off',
     'react/no-unused-state': 'off',
-    'react/state-in-constructor': 'off'
+    'react/state-in-constructor': 'off',
   },
 };

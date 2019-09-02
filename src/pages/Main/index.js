@@ -4,18 +4,15 @@ import { Link } from 'react-router-dom';
 
 import api from '../../services/api';
 
-// import Container from '../../components/Container';
-import { Container, Form, SubmitButton, List } from './styles';
+import Container from '../../components/Components';
+import { Form, SubmitButton, List } from './styles';
 
 export default class Main extends Component {
-  constructor() {
-    super();
-    this.state = {
-      newRepo: '',
-      repositories: [],
-      loading: false,
-    };
-  }
+  state = {
+    newRepo: '',
+    repositories: [],
+    loading: false,
+  };
 
   componentDidMount() {
     const repositories = localStorage.getItem('repositories');
@@ -49,6 +46,7 @@ export default class Main extends Component {
     const response = await api.get(`/repos/${newRepo}`);
 
     const data = {
+      id: response.data.id,
       name: response.data.full_name,
     };
 
@@ -77,7 +75,7 @@ export default class Main extends Component {
             onChange={this.handleInputChange}
           />
 
-          <SubmitButton loading={loading}>
+          <SubmitButton loading={loading ? 1 : 0}>
             {loading ? (
               <FaSpinner color="FFF" size={14} />
             ) : (
@@ -88,11 +86,9 @@ export default class Main extends Component {
 
         <List>
           {repositories.map(repository => (
-            <li key={repository.name}>
+            <li key={repository.id}>
               <span>{repository.name}</span>
-              <Link to={`/repository/${encodeURIComponent(repository.name)}`}>
-                Detalhes
-              </Link>
+              <Link to={`/repository/${repository.id}`}>Detalhes</Link>
             </li>
           ))}
         </List>
